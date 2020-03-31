@@ -8,9 +8,8 @@
 ifndef MKFORMAT
 MKFORMAT := 1
 
-ifneq "$(USER)" "bugs"
-# The autograder doesn't support coloured output.
-# Deactivate it when building from there.
+# TODO: Find a way to detect when the autograder is
+# compiling so we can disable colors and formatting.
 
 #
 # Format cleanup
@@ -37,5 +36,4 @@ CBOLD       :=  $$'\033[1m'
 CUNDERLN    :=  $$'\033[4m'
 ##########################################
 
-endif
 endif

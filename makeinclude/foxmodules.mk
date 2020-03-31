@@ -7,6 +7,8 @@
 
 ifndef FOXAUTOCONFIG
 
+$(if $(wildcard */libfox),,$(eval NOLIBFOX=1))
+
 define FOXAUTOCONFIG
 #!$(SHELL)
 #

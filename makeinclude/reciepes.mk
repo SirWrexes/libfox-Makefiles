@@ -45,18 +45,17 @@ $(TESTBIN): completion-tools
 #
 # Libfox modules
 #########################################################################################
-ifndef NOLIBFOX
 .PHONY: libfox
+ifdef NOLIBFOX
+libfox:
+	@$(ECHO$(BIN)) $(CRED)$(CBOLD)"Skip libfox reciepe"$(CRESET)
+else
 libfox:
 	@echo
 	@$(ECHO$(BIN)) $(CORANGE)"Make libfox rule(s)"$(CRESET) $(CBOLD)$(foreach r,$(FOXRULE),"$r")$(CRESET)
 	@echo -e "\n"$(CORANGE)"*** START LIBFOX BUILD LOG ***\n"$(CRESET)
 	@$(MAKE) ./lib/libfox $(FOXRULE)
 	@echo -e $(CORANGE)"*** STOP LIBFOX BUILD LOG ***\n"$(CRESET)
-else
-.PHONY: libfox
-libfox:
-	@$(ECHO$(BIN)) $(CRED)$(CBOLD)"Skip libfox reciepe"$(CRESET)
 endif
 #########################################################################################
 

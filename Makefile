@@ -10,26 +10,26 @@
 # It will likely break the makefile
 ##########################################
 # ↓ Project/binary name and sources
-include ./makeinclude/project.mk
+include ./makeinclude/1-project.mk
 
 # ↓ Makefile configuration
-include ./makeinclude/makeconf.mk
+include ./makeinclude/2-makeconf.mk
 
 # ↓ Colors and text formatting
-include ./makeinclude/format.mk
+include ./makeinclude/3-format.mk
 
-# ↓ Progressbar script
-include ./makeinclude/progscript.mk
+# ↓ Progress bar script
+include ./makeinclude/4-progress.mk
 
 # ↓ Libfox module detection
-include ./makeinclude/foxmodules.mk
+include ./makeinclude/5-foxmodules.mk
 
 # ↓ Various build configuration
-include ./makeinclude/builconf.mk
+include ./makeinclude/6-buildconf.mk
 
 # ↓ Rules (for %.a and %.o)
-include ./makeinclude/rules.mk
+include ./makeinclude/7-rules.mk
 
 # ↓ Reciepes for making targets
-include ./makeinclude/reciepes.mk
+include ./makeinclude/8-recipes.mk
 ##########################################

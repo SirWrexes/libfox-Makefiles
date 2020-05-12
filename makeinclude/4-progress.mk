@@ -7,12 +7,13 @@
 
 ifndef PROGBAR-CODE
 
-ifneq "$(USER)" "bugs"
-# The autograder doesn't support coloured output.
-# Deactivate it when building from there.
-    BARCOLOR := \033[38;2;255;167;4m
-    COLOROFF := \033[0m
-endif
+# Using the username doesn't work.
+# ifneq "$(USER)" "bugs"
+#  # The autograder doesn't support coloured output.
+#  # Deactivate it when building from there.
+#    BARCOLOR := \033[38;2;255;167;4m
+#    COLOROFF := \033[0m
+# endif
 
 define PROGBAR-CODE
 #!$(shell which python)

@@ -54,7 +54,7 @@ libfox:
 	@echo
 	@$(ECHO$(BIN)) $(CORANGE)"Make libfox rule(s)"$(CRESET) $(CBOLD)$(foreach r,$(FOXRULE),"$r")$(CRESET)
 	@echo -e "\n"$(CORANGE)"*** START LIBFOX BUILD LOG ***\n"$(CRESET)
-	@$(MAKE) ./lib/libfox $(FOXRULE)
+	@$(MAKE) $(FOXDIR) $(FOXRULE)
 	@echo -e $(CORANGE)"*** STOP LIBFOX BUILD LOG ***\n"$(CRESET)
 endif
 #########################################################################################
@@ -106,11 +106,6 @@ $(DEBUGBIN): libfox
 #
 # Test target
 #########################################################################################
-.PHONY: rm_test_files
-rm_test_files:
-	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" test temp files"
-	@$(foreach tmp, $(TESTTMP), $(RM) $(tmp))
-# ------------------------------------------------------------------------------------- #
 .PHONY: tests
 tests: test_report
 $(TESTBIN): TARGET          := $(TESTBIN)
@@ -134,25 +129,40 @@ test_report: rm_test_files $(TESTBIN)
 #
 # Cleanup
 #########################################################################################
+.PHONY: rm_test_files
+rm_test_files:
+	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" test temp files"
+	@$(foreach tmp, $(TESTTMP), $(RM) $(tmp))
+# ------------------------------------------------------------------------------------- #
+.PHONY: rm_fox_script
+rm_fox_script:
+	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" libfox config script ($(FOXSCRIPT))"
+	@$(RM) $(FOXSCRIPT)
+# ------------------------------------------------------------------------------------- #
 .PHONY: clean
 clean: FOXRULE := clean
 clean: OBJ     += $(MAIN:.c=.o)
-clean: libfox rm_test_files
+clean: rm_test_files
+ifndef NOLIBFOX
+clean: libfox rm_fox_script
+endif
 	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" objects"
 	@$(RM) $(OBJ)
 	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" dependency files"
 	@$(RM) $(DEP)
 	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" coverage files"
 	@$(RM) $(COV)
-	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" libfox config script ($(FOXSCRIPT))"
-	@$(RM) $(FOXSCRIPT)
 	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" progress bar script ($(PROGSCRIPT))"
 	@$(RM) $(PROGSCRIPT)
 # ------------------------------------------------------------------------------------- #
 .PHONY: fclean
 fclean: FOXRULE := fclean
 fclean: OBJ     += $(MAIN:.c=.o)
-fclean: libfox rm_test_files
+fclean: rm_test_files
+ifndef NOLIBFOX
+fclean: libfox rm_fox_script
+endif
+fclean:
 	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" $(COMPILEDB)"
 	@$(RM) $(COMPILEDB)
 	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" $(CTAGS)"
@@ -169,8 +179,6 @@ fclean: libfox rm_test_files
 	@$(RM) $(TESTBIN)
 	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET) $(DEBUGBIN)
 	@$(RM) $(DEBUGBIN)
-	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" libfox config script ($(FOXSCRIPT))"
-	@$(RM) $(FOXSCRIPT)
 	@$(ECHO$(BIN)) $(CRED)"Delete"$(CRESET)" progress bar script ($(PROGSCRIPT))"
 	@$(RM) $(PROGSCRIPT)
 # ------------------------------------------------------------------------------------- #
